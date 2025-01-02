@@ -7,7 +7,7 @@ alias cp='cp -v'
 alias rm='rm -v'
 alias ln='ln -v'
 
-alias cdtmp='cd `mktemp -d /tmp/billc-XXXXXX`'
+alias cdtmp='cd `mktemp -d /tmp/tmp-XXXXXX`'
 alias scpr='rsync -P --rsh=ssh'
 
 if [ -x "$(command -v exa)" ]; then

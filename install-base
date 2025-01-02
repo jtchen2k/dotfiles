@@ -1,4 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# ----- Helpers -----
+
+ANSI_CYAN="\033[36m"
+ANSI_NONE="\033[0m"
 
 # ----- Shell -----
 
@@ -40,6 +45,10 @@ if [ -f ~/.vimrc ]; then
 fi
 ln -sf "$(pwd)/vim/.vimrc" ~/.vimrc
 
+# coc
+ln -sf "$(pwd)/vim/coc-settings.json" ~/.config/nvim/coc-settings.json
+mkdir -p ~/.config/coc/extensions
+ln -sf "$(pwd)/vim/package.json" ~/.config/coc/extensions/package.json
 # Install vim-plug plugins
 vim +PlugInstall +qall
 
@@ -50,6 +59,8 @@ if [ -f ~/.tmux.conf ]; then
 fi
 ln -s "$(pwd)/tmux/.tmux.conf" ~/.tmux.conf
 
+tmux source-file ~/.tmux.conf
+~/.tmux/plugins/tpm/bin/install_plugins
 # ----- Git -----
 echo
 git config --global user.name "Juntong Chen"
@@ -65,12 +76,16 @@ ln -s "$(pwd)/git/.gitignore_global" ~/.config/.gitignore_global
 
 echo "" >> ~/.zshrc
 echo "export PATH=\$PATH:~/.local/bin" >> ~/.zshrc
+
+# zoxide
 echo "eval \"\$(zoxide init zsh)\"" >> ~/.zshrc
 curl -sSfL ${cnproxy}https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 
+# fd
 mkdir -p ~/.local/bin
 ln -s $(which fdfind) ~/.local/bin/fd
 
 chsh -s $(which zsh)
-echo "Finished. Please DO NOT move the dotfiles directory, or the symbolic links will be broken."
+echo -e "${ANSI_CYAN}Dotfile installation finished. Please DO NOT move the dotfiles directory, or the symbolic links will be broken.${ANSI_NONE}"
+echo -e "${ANSI_CYAN}  If you want to setup coc, please install nodejs >= 20, then vim -c +PlugInstall +qall, then :CocCommand extensions.forceUpdateAll.${ANSI_NONE}"
 zsh
