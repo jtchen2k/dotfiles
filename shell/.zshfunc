@@ -133,3 +133,8 @@ function sshperm() {
     fi
     echo "SSH permissions fixed successfully!"
 }
+
+function brewsize() {
+    # https://gist.github.com/eguven/23d8c9fc78856bd20f65f8bcf03e691b
+    du -sch $(brew --cellar)/*/* | sed "s|$(brew --cellar)/\([^/]*\)/.*|\1|" | sort -k1h
+}

@@ -19,6 +19,8 @@ set smarttab
 set foldenable
 set ai
 
+filetype plugin indent on
+
 highlight ColorColumn ctermbg=darkgray
 set colorcolumn=120
 set backspace=indent,eol,start
@@ -133,6 +135,7 @@ Plug 'tpope/vim-sensible'
 Plug 'ap/vim-css-color'
 Plug 'github/copilot.vim'
 Plug 'wakatime/vim-wakatime'
+Plug 'tpope/vim-commentary'
 
 if has('nvim-0.8') && executable('node')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
