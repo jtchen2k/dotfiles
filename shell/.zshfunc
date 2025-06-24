@@ -111,6 +111,19 @@ function ffcom() {
     fi
 }
 
+function ffrun() {
+  for pattern in "$@"; do
+    for file in $~pattern; do
+      [ -f "$file" ] || continue
+      outfile="${file%.*}_FF.mp4"
+      echo "[ffrun] Transcribing $file →  $outfile"
+      ffmpeg -i "$file" -c:v libx265 -tag:v hvc1 -crf 21 -c:a aac -b:a 256k \
+          -map_metadata 0 \
+          "$outfile"
+    done
+  done
+}
+
 function sshperm() {
     local ssh_dir="$HOME/.ssh"
     if [[ ! -d $ssh_dir ]]; then
@@ -138,3 +151,4 @@ function brewsize() {
     # https://gist.github.com/eguven/23d8c9fc78856bd20f65f8bcf03e691b
     du -sch $(brew --cellar)/*/* | sed "s|$(brew --cellar)/\([^/]*\)/.*|\1|" | sort -k1h
 }
+
